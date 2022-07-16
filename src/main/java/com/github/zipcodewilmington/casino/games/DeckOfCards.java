@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DeckOfCards  {
     private ArrayList<Card> deck;
-    private Card drawnCard;
+    public static Card drawnCard;
     public static boolean blackJackTrueWarFalse;
 
     public DeckOfCards(ArrayList<Card> deck) {
