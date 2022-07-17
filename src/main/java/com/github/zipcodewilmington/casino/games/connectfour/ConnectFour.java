@@ -42,22 +42,22 @@ public class ConnectFour implements GameInterface {
             for (int i=1; i <=2; i++) {
                 placeToken(getUserInput());
                 displayGameBoard();
-//                System.out.println("");
                 switchTurn();
                 getTurn();
 
 
+                //TODO revisit if switch case statement possible
                 if (columnConsecutive4() == true) {
                     System.out.println("GAME OVER...");
                     System.exit(3);
                 }
-                if (rowConsecutive4() == true) {
-                    System.out.println("GAME OVER...");
+                else if (rowConsecutive4() == true) {
+                    System.out.println("GAME OVER..."); //TODO customize game over situation with ascii art
                     System.exit(3);
                 }
+                //TODO needs diagonal win detection
             }
             rounds++;
-
         }
     }
 
@@ -143,11 +143,6 @@ public class ConnectFour implements GameInterface {
         }
         return isEmpty;
 
-    }
-
-    int getCol() {
-
-        return 0;
     }
 
     Character getPlayerPosition(int row, int col) {
