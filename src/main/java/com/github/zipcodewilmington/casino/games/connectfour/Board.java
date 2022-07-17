@@ -2,18 +2,36 @@ package com.github.zipcodewilmington.casino.games.connectfour;
 
 public class Board {
     public static final String ANSI_YELLOW = "\u001B[33m"; //replace with AnsiColor enums
-    private static int length = 15;
-    private static int width = 8;
+    private static int rows = 8;
+    private static int cols = 15;
     private int row;
     private int col;
-    public static final Character[][] board = new Character[width][length];
+    public static final Character[][] board = new Character[rows][cols];
 
 
     public Board(Character[][] matrix) {
     }
 
+    void createBoard() {
+        for (int r=0; r<rows; r++) {
+            for (int c=0; c<cols; c++) {
+                if (c %2 ==0) {
+                    board[r][c] = '|';
+                }
+                else {
+                    board[r][c] = 'O';
+                }
+
+                if (r==0) {
+                    board[r][c] = '_';
+                }
+                else if (r ==7) board[r][c] = '-';
+            }
+        }
+    }
 
 
+/*
     //creates board, NOT displays
     static void createGameBoard() {
         for (int row = 0; row < width; row++) {
@@ -27,14 +45,18 @@ public class Board {
                 else if (row ==7) board[row][col] = '-';
             }
         }
+        for (int r=0; r<rows; r++) {
+            board[rows] = '-';
+            for (int c=0; c<cols; c++) {
+
+            }
+        }
     }
+*/
 
 
     static void displayGameBoard() {
-        //TODO number rows to better user's understanding
-        int colNums = 0;
         for (Character[] row : board) {
-//            System.out.print(rowNums++);
             for (Character ch : row) {
                 System.out.print(ANSI_YELLOW + ch);
                 System.out.print("\t");
@@ -57,6 +79,7 @@ public class Board {
         return board[row][col];
     }
 
+/*
     public boolean placeToken(int col, Character tokenColor) {
         int i=width-1;
         this.col = col-1;
@@ -74,8 +97,10 @@ public class Board {
             return true;
         }
     }
+*/
 
 
+/*
     void clear() {
         for (int i=0; i<width; i++) {
             for (int c=0; c<length; c++) {
@@ -83,4 +108,5 @@ public class Board {
             }
         }
     }
+*/
 }

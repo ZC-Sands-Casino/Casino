@@ -2,8 +2,6 @@ package com.github.zipcodewilmington.casino.games.connectfour;
 
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
-import com.github.zipcodewilmington.utils.AnsiColor;
-import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.*;
 
@@ -11,81 +9,163 @@ import static com.github.zipcodewilmington.casino.games.connectfour.Board.*;
 
 
 public class ConnectFour implements GameInterface {
+    Board gameBoard;
+    Character playerR = 'R';
+    Character playerB = 'B';
+    Character player = playerR;
+
+
     public static void main(String[] args) {
         ConnectFour cf = new ConnectFour();
         cf.run();
     }
 
     public void playConnectFour() {
+/*
         List<Character[][]> playerR = new ArrayList<>();
         List<Character[][]> playerB = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
+*/
         ConnectFourPlayer cfPlayer = new ConnectFourPlayer();
-        Board gameBoard;
-        IOConsole con = new IOConsole();
+        int rounds = 1;
+//        Character playerR = 'R';
+//        Character playerB = 'B';
 
-        Token userToken = new Token();
-        int round = 1;
-        Character player = 'R';
 
-        int col = 0;
-//        int row;
-        boolean winner = false;
         boolean allowedPlacement;
 
         gameBoard = new Board(board);
-        createGameBoard();
+        gameBoard.createBoard();
 
-
-/*
-        while (winner == false && round <= 42) {
-
-            do {
-*/
-            while (round < 3) {
-
-                do {
-//                gameBoard.clear(); //TODO maybe don't need
+        displayGameBoard();
+        while (rounds <=21) {
+            for (int i=1; i <=2; i++) {
+                placeToken(getUserInput());
                 displayGameBoard();
-                con.print("Round #" + round + "\nPlayer " + player +
-                        " , enter a number to choose column:");
-                cfPlayer.setPositionPlacement(sc.nextInt());
-                col = cfPlayer.getPositionPlacement() * 2 - 1;
+//                System.out.println("");
+                switchTurn();
+                getTurn();
+            }
+            rounds++;
 
+        }
+    }
 
-                allowedPlacement = checkPlacement(col, board);
+    int getUserInput() {
+        int position;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\nPlayer" + player + "'s Turn");
+        System.out.print("Enter a column number to place your token: ");
 
-            } while (allowedPlacement == false) ;
-            for (int row = board.length - 1; row >= 1; row--) {
-                if (board[row][col] == 'O') {
-                    board[row][col] = player; //TODO
-                    break;
+        position = sc.nextInt();
+        return position;
+    }
+
+    void placeToken(int columnChoice) {
+        int r = 6;
+        Character characterAtPosition = getPlayerPosition(r, columnChoice * 2 - 1);
+        ;
+
+        // while board has no winner
+        if (isPositionValid(board) == true) {
+            //check if position is empty aka contains 'O' character
+            if (characterAtPosition.equals('O')) {
+                System.out.println("Index:\t" + r + ", " + columnChoice);
+                //print out character at empty position...which would return 'O'
+                System.out.println("Character: " + getPlayerPosition(r, columnChoice * 2 - 1));
+
+                //update that position with player's token
+                board[r][columnChoice * 2 - 1] = player;
+            } else {
+                //if position is not empty aka returns anything other than 'O'
+                System.out.println("Position not available...");
+
+                //decrement row by 1 aka move up 1 position in column
+                //until no longer able aka top row is reached
+                for (int newR = r - 1; newR >= 1; newR--) {
+                    //check if new column position is empty
+                    if (board[newR][columnChoice * 2 - 1].equals('O')) {
+                        System.out.println("Index:\t" + newR + ", " + columnChoice);
+
+                        board[newR][columnChoice * 2 - 1] = player;
+                        //break out of loop & try again
+                        //or just break out
+                        break;
+                    }
                 }
             }
-            winner = isWinner(player, board);
 
-            if (player == 'R') {
-                player = 'B';
-            } else {
-                player = 'R';
-            }
-            round++;
-            System.out.println("\n\n");
-
-//            displayGameBoard();
-            System.out.println("COL: " +
-//                    Arrays.asList(board).indexOf(board));
-                    gameBoard.getRow());
-        }
-        //        while (winner==false) {
-
-            if (gameBoard.getRow()>7 || gameBoard.getRow()<0) {
-                System.out.print("ERROR: invalid number");
+/*
+            if (characterAtPosition.equals('O')) {
+                board[r][columnChoice*2 -1] = player;
             }
             else {
-                board[6][gameBoard.getRow()] = player;
+                System.out.println("Position not available...");
+
+                for (int newR=r-1; newR>=1; newR--) {
+                    if (board[newR][columnChoice *2 -1].equals('O')) {
+                        board[newR][columnChoice *2 -1] = player;
+                        break;
+                    }
+//                    else {
+//                        System.out.println("Column filled!");
+//                    }
+                }
+            }
+*/
+//            switchTurn();
+//            for (int row=r; row<=6; row=row) {
+//                for (int col=columnChoice; col <=13; col=col) {
+//                    board[row][col] = 'R';
+//                }
+//            }
+        }
+//        System.out.println("");
+
+    }
+
+    void switchTurn() {
+        if (player == playerR)
+            player = playerB;
+        else
+            player = playerR;
+    }
+
+    Character getTurn() {
+        if (player == playerR)
+            return playerR;
+        else
+            return playerB;
+    }
+
+    boolean isPositionValid(Character[][] board) {
+        boolean isEmpty = true;
+
+        for (int r = 6; r >= 1; r--) {
+            for (int c = 1; c <= 13; c += 2) {
+                if (board[r][c].equals('O')) {
+                    isEmpty = true;
+                }
+//                else if (board[r][c].equals('R') || board[r][c].equals('B')) {
+                else {
+                    isEmpty = false;
+                }
             }
         }
+        return isEmpty;
+
+    }
+
+    int getCol() {
+
+        return 0;
+    }
+
+    Character getPlayerPosition(int row, int col) {
+        return board[row][col];
+    }
+
+
 
 /*
         displayGameBoard();
@@ -177,64 +257,6 @@ public class ConnectFour implements GameInterface {
     }
 */
 
-    static boolean checkPlacement(int col, Character[][] board) {
-        if (col < 1) { //TODO
-            System.out.print("ERROR: invalid number");
-            return false;
-        } else if (board[1][col] != 'O') { //TODO
-            return false;
-        }
-        return true;
-    }
-
-
-    static boolean isWinner(Character player, Character[][] board) {
-        for (int row = 1; row < board.length; row++) {
-            for (int col = 1; col < board[row].length - 2; col++) {
-                if (board[row][col] == player &&
-                        board[row][col + 2] == player &&
-                        board[row][col + 4] == player &&
-                        board[row][col + 6] == player) {
-                    return true;
-                }
-            }
-        }
-
-        for (int row = 1; row < board.length - 3; row++) {
-            for (int col = 1; col < board[1].length; col++) {
-                if (board[row][col] == player &&
-                        board[row + 2][col] == player &&
-                        board[row + 4][col] == player &&
-                        board[row + 6][col] == player) {
-                    return true;
-                }
-            }
-        }
-
-        for (int row = 3; row < board.length; row++) {
-            for (int col = 1; col < board[1].length - 3; col++) {
-                if (board[row][col] == player &&
-                        board[row - 2][col + 2] == player &&
-                        board[row - 4][col + 4] == player &&
-                        board[row - 6][col + 6] == player) {
-                    return true;
-                }
-            }
-        }
-
-        for (int row = 1; row < board.length - 3; row++) {
-            for (int col = 1; col < board[1].length - 3; col++) {
-                if (board[row][col] == player &&
-                        board[row + 2][col + 2] == player &&
-                        board[row + 4][col + 4] == player &&
-                        board[row + 6][col + 6] == player) {
-                    return true;
-
-                }
-            }
-        }
-        return false;
-    }
 
     @Override
     public void add(PlayerInterface player) {
