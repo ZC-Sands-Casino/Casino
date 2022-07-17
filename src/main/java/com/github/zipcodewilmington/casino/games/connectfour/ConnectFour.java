@@ -45,6 +45,16 @@ public class ConnectFour implements GameInterface {
 //                System.out.println("");
                 switchTurn();
                 getTurn();
+
+
+                if (columnConsecutive4() == true) {
+                    System.out.println("GAME OVER...");
+                    System.exit(3);
+                }
+                if (rowConsecutive4() == true) {
+                    System.out.println("GAME OVER...");
+                    System.exit(3);
+                }
             }
             rounds++;
 
@@ -62,6 +72,7 @@ public class ConnectFour implements GameInterface {
     }
 
     void placeToken(int columnChoice) {
+        //starting row at very bottom
         int r = 6;
         Character characterAtPosition = getPlayerPosition(r, columnChoice * 2 - 1);
         ;
@@ -73,6 +84,9 @@ public class ConnectFour implements GameInterface {
                 System.out.println("Index:\t" + r + ", " + columnChoice);
                 //print out character at empty position...which would return 'O'
                 System.out.println("Character: " + getPlayerPosition(r, columnChoice * 2 - 1));
+                gameBoard.setRow(r);
+                gameBoard.setCol(columnChoice *2 -1);
+
 
                 //update that position with player's token
                 board[r][columnChoice * 2 - 1] = player;
@@ -86,6 +100,8 @@ public class ConnectFour implements GameInterface {
                     //check if new column position is empty
                     if (board[newR][columnChoice * 2 - 1].equals('O')) {
                         System.out.println("Index:\t" + newR + ", " + columnChoice);
+                        gameBoard.setRow(newR);
+                        gameBoard.setCol(columnChoice *2 -1);
 
                         board[newR][columnChoice * 2 - 1] = player;
                         //break out of loop & try again
@@ -94,34 +110,7 @@ public class ConnectFour implements GameInterface {
                     }
                 }
             }
-
-/*
-            if (characterAtPosition.equals('O')) {
-                board[r][columnChoice*2 -1] = player;
-            }
-            else {
-                System.out.println("Position not available...");
-
-                for (int newR=r-1; newR>=1; newR--) {
-                    if (board[newR][columnChoice *2 -1].equals('O')) {
-                        board[newR][columnChoice *2 -1] = player;
-                        break;
-                    }
-//                    else {
-//                        System.out.println("Column filled!");
-//                    }
-                }
-            }
-*/
-//            switchTurn();
-//            for (int row=r; row<=6; row=row) {
-//                for (int col=columnChoice; col <=13; col=col) {
-//                    board[row][col] = 'R';
-//                }
-//            }
         }
-//        System.out.println("");
-
     }
 
     void switchTurn() {
@@ -164,6 +153,62 @@ public class ConnectFour implements GameInterface {
     Character getPlayerPosition(int row, int col) {
         return board[row][col];
     }
+
+    boolean columnConsecutive4() {
+        int row = gameBoard.getRow();
+        int col = gameBoard.getCol();
+        int count = 0;
+
+        while (row < 6 && count < 3 && gameBoard.getPosition(row, col) == gameBoard.getPosition(row + 1, col)) {
+            count++;
+            row++;
+        }
+
+        if (count == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean rowConsecutive4() {
+        int row = gameBoard.getRow();
+        int col = gameBoard.getCol();
+        int count = 0;
+
+        if (col < 13) {
+            while (col < 13 && count < 3 &&
+                    gameBoard.getPosition(row, col) == gameBoard.getPosition(row, col +2)) {
+                count++;
+                col+=2;
+            }
+        }
+        else if (col >2) {
+            row = gameBoard.getRow();
+            col = gameBoard.getCol();
+            while (col > 2 && count < 3 &&
+                    gameBoard.getPosition(row, col) == gameBoard.getPosition(row, col -2)) {
+                count++;
+                col-=2;
+            }
+        }
+//        while (col < 16 && count < 3 &&
+//                gameBoard.getPosition(row, col) == gameBoard.getPosition(row, col +2)) {
+//            count++;
+//            col+=2;
+//
+//            if (col==13) {
+//                gameBoard.setCol(col-2);
+//            }
+//        }
+
+        if (count == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
 

@@ -4,6 +4,8 @@ public class Board {
     public static final String ANSI_YELLOW = "\u001B[33m"; //replace with AnsiColor enums
     private static int rows = 8;
     private static int cols = 15;
+
+
     private int row;
     private int col;
     public static final Character[][] board = new Character[rows][cols];
@@ -70,10 +72,18 @@ public class Board {
     public int getRow() {
         return row;
     }
+    public void setRow(int row) {
+        this.row = row;
+    }
+
 
     public int getCol() {
         return col;
     }
+    public void setCol(int col) {
+        this.col = col;
+    }
+
 
     public Character getPosition(int row, int col) {
         return board[row][col];
