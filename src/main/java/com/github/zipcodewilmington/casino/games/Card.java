@@ -56,7 +56,7 @@ public class Card {
     }
 
     public static List<Integer> getValidValues(){
-        if (DeckOfCards.blackJackTrueWarFalse == false){
+        if (DeckOfCards.blackJackTrueWarFalse == true){
             return Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11);
         }
         else{

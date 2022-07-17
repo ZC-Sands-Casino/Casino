@@ -25,13 +25,11 @@ public class BlackJackGame {
     ArrayList<Card> dealHand = new ArrayList<>();
     Scanner scan = new Scanner (System.in);
 
-    int i = 0;
+
 
     public static void main(String[] args) {
         System.out.println("Welcome to the Bobby's Brutal Blackjack. Name's Bobby, nice to meet cha.");
         BlackJackGame bj = new BlackJackGame();
-        DeckOfCards.blackJackTrueWarFalse = true;
-//        DeckOfCards.blackJackTrueWarFalse = true;
 //        DeckOfCards deck = new DeckOfCards();
 //        deck.shuffle();
 //        deck.shuffle();
@@ -46,18 +44,21 @@ public class BlackJackGame {
 
     void playGame() {
         Scanner scan = new Scanner(System.in);
-        DeckOfCards.blackJackTrueWarFalse = true;
+        DeckOfCards deck = new DeckOfCards();
+        deck.shuffle();
         welcomeStatement();
-        showPlayerBet();
-        System.out.println("And for the first care, the dealer has...\n");
-        showDealerDraw1();
-        dealerRecap1();
-        playerRecap();
+//        showPlayerBet();
+        System.out.println("And for the first card, the dealer has...");
         scan.nextLine();
-        showPlayerDraw();
-        System.out.println("And for their 2nd hand the dealer has...");
+        showDealerDraw1();
+        System.out.println("And for the next card, the dealer has...");
+        scan.nextLine();
         showDealerDraw2();
-        dealerRecap2();
+        if (dealerValue == 21){
+            dealerWinsEarly();
+        }else {
+            dealerRecap2();
+        }
         while (playerValue < 21 && playerValue <= dealerValue) {
             if ((playerChips - playerBet) > playerBet && playerBet != 0) {
                 System.out.println("Right now you got " + playerValue + ". Type 'dd' to double down, or hit enter to draw");
@@ -74,6 +75,7 @@ public class BlackJackGame {
             }
         }
 
+
         if (playerValue <= 21 && playerValue > dealerValue){
             playerWins();
         } else if (playerValue > 21){
@@ -89,35 +91,35 @@ public class BlackJackGame {
     }
 
     private int showDealerDraw1(){
-        deck.shuffle();
-        if (deck.get(i).getValue() < 10){
-            i++;
+        DeckOfCards.blackJackTrueWarFalse = true;
+        if (deck.get(0).getValue() != 9){
+            deck.shuffle();
             showDealerDraw1();
         }else {
-            System.out.println(deck.get(i));
-            dealerValue += deck.get(i).getValue();
-            dealHand.add((deck.get(i)));
+            System.out.println(deck.get(0));
+            dealerValue += deck.get(0).getValue();
+            dealHand.add((deck.get(0)));
             deck.draw();
 
-            }
-        return 0;
+        }
+        return dealerValue;
     }
 
 
     private int showDealerDraw2(){
-        deck.shuffle();
-
-        if (deck.get(i).getValue() < 4 || deck.get(i).getValue() > 10){
-            i++;
-            showDealerDraw1();
+        DeckOfCards.blackJackTrueWarFalse = true;
+        if (deck.get(0).getValue() != 11){
+            deck.shuffle();
+            showDealerDraw2();
         }else {
-            System.out.println(deck.get(i));
-            dealerValue += deck.get(i).getValue();
-            dealHand.add((deck.get(i)));
+            System.out.println(deck.get(0));
+            dealerValue += deck.get(0).getValue();
+            dealHand.add((deck.get(0)));
             deck.draw();
-            }
-        return dealerValue;
+
         }
+        return dealerValue;
+    }
 
 
 
@@ -153,7 +155,7 @@ public class BlackJackGame {
 
 
     private int showPlayerDraw(){
-
+        DeckOfCards.blackJackTrueWarFalse = true;
         deck.shuffle();
         if (deck.get(0).getValue() == 11){
             System.out.println(deck.get(0));
@@ -165,9 +167,7 @@ public class BlackJackGame {
             playerValue += deck.get(0).getValue();
             playHand.add((deck.get(0)));
             deck.draw();
-            for (int i = 0; i > playHand.size(); i++) {
-                System.out.println(playHand.get(i) + " " + playHand.get(i).getValue());
-            }
+
         }
         return playerValue;
     }
@@ -233,6 +233,16 @@ public class BlackJackGame {
         playerValue = 0;
         dealerValue = 0;
         scan.nextLine();
+        playGame();
+    }
+
+    public void dealerWinsEarly(){
+        Scanner scan = new Scanner(System.in);
+        playerChips-=playerBet;
+        System.out.println("An easy 21 for me! Welp, them's the breaks, kid. You lost " + playerBet + " chips and now have " + playerChips + " chips. Hit enter to play again.");
+        playerValue = 0;
+        dealerValue = 0;
+//        scan.nextLine();
         playGame();
     }
 
