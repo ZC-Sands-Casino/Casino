@@ -57,6 +57,18 @@ public class DeckOfCards  {
         return null;
     }
 
+    public DeckOfCards splitDeck(DeckOfCards a, DeckOfCards b){
+        int deckSize = a.size();
+        for(int i = deckSize - 1; i > deckSize/2 - 1; i--){
+            a.getDeck().remove(i);
+
+        }
+        for(int i = deckSize/2 - 1; i >= 0; i--){
+            b.getDeck().remove(i);
+        }
+        return b;
+    }
+
     public DeckOfCards(DeckOfCards a){
         deck = new ArrayList<Card>(a.size());
         for(int i = 0; i < a.size(); i++){
