@@ -1,13 +1,13 @@
 package com.github.zipcodewilmington.casino.games;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class DeckOfCards  {
     private ArrayList<Card> deck;
     public static Card drawnCard;
+
     public static boolean blackJackTrueWarFalse;
 
     public DeckOfCards(ArrayList<Card> deck) {
@@ -39,6 +39,7 @@ public class DeckOfCards  {
         drawnCard = deck.get(0);
         deck.remove(0);
         return drawnCard;
+
     }
 
     public boolean removeAll() {
@@ -65,6 +66,7 @@ public class DeckOfCards  {
             deck.get(i).setSuit(a.get(i).getSuit());
             deck.get(i).setValue(a.get(i).getValue());
         }
+
     }
 
     public DeckOfCards(){
