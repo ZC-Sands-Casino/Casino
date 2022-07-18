@@ -16,7 +16,6 @@ public class Card {
 
     public static List<String> getValidFaceNames(){
         return Arrays.asList("2","3","4","5","6","7","8","9","10",
-
                 "J","Q","K","A");
     }
 
@@ -63,7 +62,7 @@ public class Card {
     }
 
     public static List<Integer> getValidValues(){
-        if (DeckOfCards.blackJackTrueWarFalse == true){
+        if (DeckOfCards.isBlackJackTrueWarFalse() == true){
             return Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11);
         }
         else{
