@@ -1,11 +1,15 @@
 package com.github.zipcodewilmington.casino.games;
 
 import java.util.ArrayList;
+
+import java.util.Arrays;
+
 import java.util.Collections;
 import java.util.List;
 
 public class DeckOfCards  {
-    private ArrayList<Card> deck;
+
+    public ArrayList<Card> deck;
     public static Card drawnCard;
 
     public static boolean blackJackTrueWarFalse;
@@ -66,6 +70,7 @@ public class DeckOfCards  {
             deck.get(i).setSuit(a.get(i).getSuit());
             deck.get(i).setValue(a.get(i).getValue());
         }
+
 
     }
 

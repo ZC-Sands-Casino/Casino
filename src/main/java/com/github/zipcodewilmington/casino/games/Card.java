@@ -16,12 +16,15 @@ public class Card {
 
     public static List<String> getValidFaceNames(){
         return Arrays.asList("2","3","4","5","6","7","8","9","10",
-                "jack","queen","king","ace");
+
+                "J","Q","K","A");
     }
 
     public void setFaceName(String faceName) {
         List<String> validFaceNames = getValidFaceNames();
-        faceName = faceName.toLowerCase();
+
+        faceName = faceName.toUpperCase();
+
         if (validFaceNames.contains(faceName)){
             this.faceName = faceName;}
         else
@@ -33,7 +36,9 @@ public class Card {
     }
 
     public static List<String> getValidSuits(){
-        return Arrays.asList("hearts", "diamonds", "spades", "clubs");
+
+        return Arrays.asList("♥", "♦", "♠", "♣");
+
     }
 
     public void setSuit(String suit) {
@@ -48,7 +53,9 @@ public class Card {
     }
 
     public String toString(){
-        return String.format("%s of %s", faceName, suit);
+
+        return String.format("|%s %s|", faceName, suit);
+
     }
 
     public int getValue(){
