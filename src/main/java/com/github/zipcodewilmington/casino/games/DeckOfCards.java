@@ -89,7 +89,9 @@ public class DeckOfCards  {
 
     }
 
-    public DeckOfCards(){
+    public DeckOfCards(boolean blackJackTrueWarFalse){
+        if(blackJackTrueWarFalse == true){blackJackTrueWarFalse = true;}
+        else{blackJackTrueWarFalse = false;}
         List<String> suits = Card.getValidSuits();
         List<String> faceNames = Card.getValidFaceNames();
         List<Integer> values = Card.getValidValues();
