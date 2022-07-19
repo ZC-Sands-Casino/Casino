@@ -84,7 +84,7 @@ public class ChuckALuckGame implements GameInterface {
     public static void playChuckALuckGame() {
         ChuckALuckGame game = new ChuckALuckGame();
         game.printRules();
-        while(true) {
+        while(game.askBetType() != 0) {
             game.askBetType();
             game.tossDice1();
             game.tossDice2();
