@@ -14,7 +14,7 @@ import java.util.Random;
 public class BlackJackGame {
     int playerValue = 0;
     //DeckOfCards.blackJackTrueWarFalse = true;
-    DeckOfCards deck = new DeckOfCards();
+    DeckOfCards deck = new DeckOfCards(true);
     int dealerValue = 0;
 
     int playerChips = 500;
@@ -39,14 +39,14 @@ public class BlackJackGame {
 //        System.out.println(playHand.get(0) +  "" +playHand.get(0).getValue());
 //        for (int i = 0; i  <deck.size();i++){
 //            System.out.println(deck.get(i) + " " + deck.get(i).getValue());
-        DeckOfCards deck = new DeckOfCards();
+        DeckOfCards deck = new DeckOfCards(true);
         bj.playGame();
     }
 
 
     void playGame() {
         Scanner scan = new Scanner(System.in);
-        DeckOfCards deck = new DeckOfCards();
+        DeckOfCards deck = new DeckOfCards(true);
         deck.shuffle();
         welcomeStatement();
         showPlayerBet();
