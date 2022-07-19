@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.connectfour;
 
+import com.github.zipcodewilmington.Casino;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 import com.github.zipcodewilmington.utils.AnsiColor;
@@ -72,13 +73,28 @@ public class ConnectFour implements GameInterface {
                     System.out.println("GAME OVER...");
                     switchTurn();
                     System.out.println("Player"+player+"\033[1;93m"+" wins!".toUpperCase());
-                    System.exit(3);
+
+                    System.out.println("Enter 'q' to exit game");
+                    Scanner sc = new Scanner(System.in);
+                    String quitResponse = sc.nextLine();
+                    if (quitResponse.equals("q")) {
+                        Casino cas = new Casino();
+                        cas.run();
+                    }
+
                 }
                 else if (rowConsecutive4() == true) {
                     System.out.println("GAME OVER...");
                     switchTurn();
                     System.out.println("Player"+player+"\033[1;93m"+"\033[1;93m wins!".toUpperCase());
-                    System.exit(3);
+
+                    System.out.println("Enter 'q' to exit game");
+                    Scanner sc = new Scanner(System.in);
+                    String quitResponse = sc.nextLine();
+                    if (quitResponse.equals("q")) {
+                        Casino cas = new Casino();
+                        cas.run();
+                    }
                 }
                 //TODO needs diagonal win detection
             }
