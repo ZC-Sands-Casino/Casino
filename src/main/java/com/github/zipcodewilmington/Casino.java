@@ -16,6 +16,7 @@ import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by leon on 7/21/2020.
@@ -27,6 +28,31 @@ public class Casino implements Runnable {
     public void run() {
         String arcadeDashBoardInput;
         CasinoAccountManager casinoAccountManager = new CasinoAccountManager();
+        slowPrint(intro());
+        System.out.println("\n " +
+                " /$$$$$$                            /$$              \n" +
+                " /$$__  $$                          | $$              \n" +
+                "| $$  \\__/  /$$$$$$  /$$$$$$$   /$$$$$$$  /$$$$$$$    \n" +
+                "|  $$$$$$  |____  $$| $$__  $$ /$$__  $$ /$$_____/    \n" +
+                " \\____  $$  /$$$$$$$| $$  \\ $$| $$  | $$|  $$$$$$     \n" +
+                " /$$  \\ $$ /$$__  $$| $$  | $$| $$  | $$ \\____  $$    \n" +
+                "|  $$$$$$/|  $$$$$$$| $$  | $$|  $$$$$$$ /$$$$$$$/    \n" +
+                " \\______/  \\_______/|__/  |__/ \\_______/|_______/     \n" +
+                "                                                      \n" +
+                "                                                      \n" +
+                "                                                      \n" +
+                "  /$$$$$$                      /$$                    \n" +
+                " /$$__  $$                    |__/                    \n" +
+                "| $$  \\__/  /$$$$$$   /$$$$$$$ /$$ /$$$$$$$   /$$$$$$ \n" +
+                "| $$       |____  $$ /$$_____/| $$| $$__  $$ /$$__  $$\n" +
+                "| $$        /$$$$$$$|  $$$$$$ | $$| $$  \\ $$| $$  \\ $$\n" +
+                "| $$    $$ /$$__  $$ \\____  $$| $$| $$  | $$| $$  | $$\n" +
+                "|  $$$$$$/|  $$$$$$$ /$$$$$$$/| $$| $$  | $$|  $$$$$$/\n" +
+                " \\______/  \\_______/|_______/ |__/|__/  |__/ \\______/ \n" +
+                "                                                      \n" +
+                "                                                      \n" +
+                "                                                      " );
+        slowPrint(intro2());
         try{
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
@@ -107,5 +133,26 @@ public class Casino implements Runnable {
         PlayerInterface player = (PlayerInterface) playerObject;
         game.add(player);
         game.run();
+    }
+
+    public String intro(){
+        return "\n\nWelcome to the \n ";
+    }
+
+    public String intro2(){
+        return "Like sands through the hourglass, your coinage will flow into our pockets.  \n"+
+                "But if it's your lucky day, you may be one of the few to win the whole jackpot. \n"+
+                "Are you feeling lucky?\n\n";
+    }
+
+    public static void slowPrint(String output) {
+        for (int i = 0; i < output.length(); i++) {
+            char c = output.charAt(i);
+            System.out.print(c);
+            try {
+                TimeUnit.MILLISECONDS.sleep(90);
+            } catch (Exception e) {
+            }
+        }
     }
 }

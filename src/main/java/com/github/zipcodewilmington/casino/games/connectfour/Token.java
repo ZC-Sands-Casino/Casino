@@ -1,25 +1,20 @@
 package com.github.zipcodewilmington.casino.games.connectfour;
 
-import com.github.zipcodewilmington.utils.AnsiColor;
 
 public class Token {
-    private Character symbol;
-    private AnsiColor color;
-    private static final String ANSI_RED = "\u001B[31m";
-    private static final String ANSI_BLACK = "\u001B[30m";
+    private String symbol;
 
     Token() {
-
+        this.symbol = "R";
     }
 
-    public Character getSymbol() {
+    public String getSymbol() {
         return this.symbol;
     }
 
-    public void setSymbol(Character symbol) {
+    public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
-
 
 //    Token() {
 //        this.symbol = 'O';
