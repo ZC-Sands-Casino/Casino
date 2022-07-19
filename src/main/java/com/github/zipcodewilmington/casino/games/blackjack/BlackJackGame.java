@@ -49,7 +49,7 @@ public class BlackJackGame implements GameInterface {
         playerRecap();
         scan.nextLine();
         showPlayerDraw();
-        System.out.println("And for the next card, the dealer has...");
+        System.out.println("And for the next card, the dealer has...\n");
         showDealerDraw2();
         if (dealerValue == 21){
             dealerWinsEarly();
@@ -96,7 +96,6 @@ public class BlackJackGame implements GameInterface {
             dealHand.add((deck.get(0)));
             deck.draw();
             System.out.println(dealHand);
-            System.out.println("\n");
         }
         return dealerValue;
     }
@@ -111,7 +110,6 @@ public class BlackJackGame implements GameInterface {
             dealHand.add((deck.get(0)));
             deck.draw();
             System.out.println(dealHand);
-            System.out.println("\n");
         }
         return dealerValue;
     }
@@ -128,7 +126,6 @@ public class BlackJackGame implements GameInterface {
             playHand.add((deck.get(0)));
             deck.draw();
             System.out.println(playHand);
-            System.out.println("\n");
         }
         return playerValue;
     }
@@ -137,7 +134,7 @@ public class BlackJackGame implements GameInterface {
         System.out.println("It looks like the dealer has pulled a " + dealerValue + ".");
     }
     public void dealerRecap2() {
-        System.out.println("The dealer's gonna hold at " + dealerValue + ". See if you can beat that!");
+        System.out.println("The dealer's gonna hold at " + dealerValue + ". See if you can beat that!\n");
     }
 
     public void playerRecap(){
