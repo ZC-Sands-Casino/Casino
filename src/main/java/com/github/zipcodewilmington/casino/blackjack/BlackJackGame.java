@@ -95,7 +95,7 @@ public class BlackJackGame {
 
     public int showDealerDraw1(){
         DeckOfCards.blackJackTrueWarFalse = true;
-        if (deck.get(0).getValue() != 9){
+        if (deck.get(0).getValue() != 10){
             deck.shuffle();
             showDealerDraw1();
         }else {
@@ -111,14 +111,14 @@ public class BlackJackGame {
 
     public int showDealerDraw2(){
         DeckOfCards.blackJackTrueWarFalse = true;
-        if (deck.get(0).getValue() != 11){
+        if (deck.get(0).getValue() != 6){
             deck.shuffle();
             showDealerDraw2();
         }else {
-            System.out.println(deck.get(0));
             dealerValue += deck.get(0).getValue();
             dealHand.add((deck.get(0)));
             deck.draw();
+            System.out.println(dealHand);
 
         }
         return dealerValue;
@@ -128,30 +128,32 @@ public class BlackJackGame {
         DeckOfCards.blackJackTrueWarFalse = true;
         deck.shuffle();
         if (deck.get(0).getValue() == 11){
-            System.out.println(deck.get(0));
+            System.out.println(playHand);
             playHand.add((deck.get(0)));
             deck.draw();
             aces();
         }else {
-            System.out.println(deck.get(0));
             playerValue += deck.get(0).getValue();
             playHand.add((deck.get(0)));
             deck.draw();
-
+            System.out.println(playHand);
+            System.out.println("\n");
+            }
+           return playerValue;
         }
-        return playerValue;
-    }
+
+
 
 
     public void dealerRecap1() {
         System.out.println("It looks like the dealer has pulled a " + dealerValue + ".");
     }
     public void dealerRecap2() {
-        System.out.println("It looks like the dealer has pulled a " + dealerValue + ". See if you can beat that.");
+        System.out.println("Looks like the dealer has pulled a " + dealerValue + ". See if you can beat that.");
     }
 
     public void playerRecap(){
-        System.out.println("Right now you got " + playerValue + ". Hit enter to draw");
+        System.out.println("You've got " + playerValue + ". Hit enter to draw");
     }
 
     private int showPlayerBet(){
@@ -185,6 +187,7 @@ public class BlackJackGame {
         }
         if (nextDraw == 1 || nextDraw == 11) {
             playerValue += nextDraw;
+            System.out.println(playHand);
             System.out.println("Ya drew a " + nextDraw + "!");
         }else{
             System.out.println("Nice try.");
