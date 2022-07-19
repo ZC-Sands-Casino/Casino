@@ -7,7 +7,7 @@ public class DeckOfCards  {
     public ArrayList<Card> deck;
     public static Card drawnCard;
 
-    private static boolean blackJackTrueWarFalse;
+    private static boolean blackJackTrueWarFalse = true;
 
     public DeckOfCards(ArrayList<Card> deck) {
         this.deck = deck;
@@ -58,10 +58,9 @@ public class DeckOfCards  {
         return null;
     }
 
+
     public  ArrayList<Card> addAllCard(int index,ArrayList<Card> d){
-        for (Card c: d) {
-            d.addAll((Collection<? extends Card>) c);
-        }
+            deck.addAll(d);
         return null;
     }
 
@@ -78,9 +77,10 @@ public class DeckOfCards  {
     }
 
     public DeckOfCards(DeckOfCards a){
+        Collections.shuffle(a.getDeck());
         deck = new ArrayList<Card>(a.size());
         for(int i = 0; i < a.size(); i++){
-            deck.add(new Card("ace", "spades", 11));
+            deck.add(new Card("A", "♠", 14));
             deck.get(i).setFaceName(a.get(i).getFaceName());
             deck.get(i).setSuit(a.get(i).getSuit());
             deck.get(i).setValue(a.get(i).getValue());
