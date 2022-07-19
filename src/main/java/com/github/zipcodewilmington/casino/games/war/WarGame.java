@@ -23,8 +23,8 @@ public class WarGame implements GameInterface {
     String selectCardVis = "";
     ArrayList<Card> playerHand = new ArrayList<>(5);
     ArrayList<Card> dealerHand = new ArrayList<>(5);
-    ArrayList<Card> playerPile;
-    ArrayList<Card> dealerPile;
+    ArrayList<Card> playerPile = new ArrayList<>(52);
+    ArrayList<Card> dealerPile = new ArrayList<>(52);
     private static DeckOfCards deck1 = new DeckOfCards(false);
     private static DeckOfCards deck2 = new DeckOfCards(deck1);
 
@@ -56,8 +56,31 @@ public class WarGame implements GameInterface {
         playHand();
         dealHand();
         showSelections();
+        compareCards();
 
 
+    }
+
+
+    public void compareCards(){
+        if(playerSelectedCard.get(0).getValue() > dealerSelectedCard.get(0).getValue()){
+            System.out.println("Your card wins");
+            playerPile.add(playerSelectedCard.get(0));
+            playerPile.add(dealerSelectedCard.get(0));
+            playerSelectedCard.removeAll(playerSelectedCard);
+            dealerSelectedCard.removeAll(dealerSelectedCard);
+        }
+        else if (playerSelectedCard.get(0).getValue() < dealerSelectedCard.get(0).getValue()){
+            System.out.println("Your card loses");
+            dealerPile.add(playerSelectedCard.get(0));
+            dealerPile.add(dealerSelectedCard.get(0));
+            playerSelectedCard.removeAll(playerSelectedCard);
+            dealerSelectedCard.removeAll(dealerSelectedCard);
+        }
+        else{
+            System.out.println("You look at the dealer's card and see they played the same card.\n You realize\"Maybe we aren't that different\"\n");
+            System.out.println("The both of you go off and learn to program the 'War' section for your 'War' game\nsomething that seems...kinda necessary...essential even in a game about war.");
+        }
 
     }
 
@@ -124,8 +147,8 @@ public class WarGame implements GameInterface {
     public void showPlayerHand(){
         playerHandVis = "";
         selectCardVis = "";
-        playerCardCount = deck1.size() + playerHand.size();
-        dealerCardCount = deck2.size() + dealerHand.size();
+        playerCardCount = deck1.size() + playerHand.size() + playerPile.size();
+        dealerCardCount = deck2.size() + dealerHand.size() + dealerPile.size();
         for (int i = 0; i < playerHand.size(); i++) {
             playerHandVis += playerHand.get(i);
         }
