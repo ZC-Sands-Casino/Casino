@@ -104,8 +104,8 @@ public class Casino implements Runnable {
                         play(new ChuckALuckGame(), new ChuckALuckPlayer());
         } else if (gameSelectionInput.equals("4")) { //connect four
             play(new ConnectFour(), new ConnectFourPlayer());
-                    } else if (gameSelectionInput.equals("5")) { //blackjack
-                        play(new BlackJackGame(), new BlackJackPlayer());
+//                    } else if (gameSelectionInput.equals("5")) { //blackjack
+//                        play(new BlackJackGame(), new BlackJackPlayer());
                     }else if (gameSelectionInput.equals("6")) { //war
                         play(new WarGame(), new WarPlayer());
         } else {
