@@ -4,7 +4,7 @@ import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 import com.github.zipcodewilmington.utils.IOConsole;
 
-public class War implements GameInterface {
+public class WarGame implements GameInterface {
     private IOConsole console = new IOConsole();
 
     String rules = "Each player at the start draws 5 cards into their hand.\n" +
@@ -16,7 +16,7 @@ public class War implements GameInterface {
             "A player wins once they have all of the cards";
 
     public void playWar(){
-        War game = new War();
+        WarGame game = new WarGame();
         game.printRules();
 
     }
