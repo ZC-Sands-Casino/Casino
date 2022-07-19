@@ -51,6 +51,7 @@ public class BlackJackGame implements GameInterface {
         playerRecap();
         scan.nextLine();
         showPlayerDraw();
+        doubleDownEarly();
         System.out.println("And for the next card, the dealer has...\n");
         showDealerDraw2();
         if (dealerValue == 21){
@@ -223,7 +224,7 @@ public class BlackJackGame implements GameInterface {
     public void dealerWinsEarly(){
         Scanner scan = new Scanner(System.in);
         playerChips-=playerBet;
-        System.out.println("An easy 21 for me! Welp, them's the breaks, kid. You lost " + playerBet + " chips and now have " + playerChips + " chips. Hit enter to play again or type 'exit' to get outta here.");
+        System.out.println("Welp, them's the breaks, kid. You lost " + playerBet + " chips and now have " + playerChips + " chips. Hit enter to play again or type 'exit' to get outta here.");
         playerValue = 0;
         dealerValue = 0;
         deck.addAllCard(playHand);
@@ -251,6 +252,35 @@ public class BlackJackGame implements GameInterface {
         }
         return playerBet;
     }
+    public int doubleDownEarly(){
+        System.out.println("Right now you got " + playerValue + ". Type 'dd' to double down now, or hit enter to see the dealer's card first.");
+        String respond = scan.nextLine();
+        if (respond.equals("dd")) {
+            doubleDownEarlyResults();
+        } else {
+
+        }
+        return playerBet;
+    }
+
+    public int doubleDownEarlyResults(){
+        playerBet = playerBet * 2;
+        System.out.println("OK kid, this next one is for all da marbles! Let's see what cha got!");
+        scan.nextLine();
+        System.out.println("You got:");
+        showPlayerDraw();
+        System.out.println(playerValue + "!\n");
+        System.out.println("And I got:");
+        showDealerDraw2();
+        System.out.println(dealerValue + "!");
+        if (playerValue <= 21 && playerValue > dealerValue){
+            playerWins();
+        } else{
+            dealerWinsEarly();
+        }
+        return playerBet;
+    }
+
 
     @Override
     public void add(PlayerInterface player) {
