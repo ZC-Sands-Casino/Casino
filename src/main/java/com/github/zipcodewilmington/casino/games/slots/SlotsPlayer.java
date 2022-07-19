@@ -17,6 +17,10 @@ public class SlotsPlayer extends Player implements PlayerInterface {
         this.casinoAccount = casinoAccount;
     }
 
+    public SlotsPlayer(Player player){
+        this.player = player;
+    }
+
     public SlotsPlayer(){
 
     }
