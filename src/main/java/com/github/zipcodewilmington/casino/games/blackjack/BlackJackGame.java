@@ -28,10 +28,7 @@ public class BlackJackGame implements GameInterface {
 
     ArrayList<Card> playHand = new ArrayList<>();
     ArrayList<Card> dealHand = new ArrayList<>();
-    Scanner scan = new Scanner (System.in);
-
-
-
+    Scanner scan = new Scanner(System.in);
 
 
     public static void main(String[] args) {
@@ -44,31 +41,37 @@ public class BlackJackGame implements GameInterface {
     void playGame() {
         Scanner scan = new Scanner(System.in);
         deck.shuffle();
-        welcomeStatement();
+        System.out.println("Let's jack it up!\n");
         showPlayerBet();
-        System.out.println("And for the first card, the dealer has... \n");
+        System.out.println("For my first card, I draw...");
         showDealerDraw1();
-        playerRecap();
+        System.out.println("    ");
+        System.out.println("Right now you have " + playerValue + ". Hit enter to draw for yourself.");
         scan.nextLine();
         showPlayerDraw();
-        doubleDownEarly();
-        System.out.println("And for the next card, the dealer has...\n");
+        if (playerBet != 0) {
+            doubleDownEarly();
+        }
+        System.out.println("  ");
+        System.out.println("And for my next card...");
         showDealerDraw2();
-        if (dealerValue == 21){
+        if (dealerValue == 21) {
             dealerWinsEarly();
-        }else {
-            dealerRecap2();
+        } else {
+            System.out.println(" ");
+            System.out.println("I'm gonna hold at " + dealerValue + ". See if you can beat that!\n");
+            System.out.println(playHand);
         }
         while (playerValue < 21 && playerValue <= dealerValue) {
             if ((playerChips - playerBet) > playerBet && playerBet != 0) {
-                System.out.println("Right now you got " + playerValue + ". Type 'dd' to double down, or hit enter to draw");
+                System.out.println("Now you got " + playerValue + ". Type 'dd' to double down, or hit enter to draw");
                 String respond = scan.nextLine();
                 if (respond.equals("dd")) {
                     doubleDown();
                 } else {
                     showPlayerDraw();
                 }
-            }else{
+            } else {
                 playerRecap();
                 scan.nextLine();
                 showPlayerDraw();
@@ -76,9 +79,9 @@ public class BlackJackGame implements GameInterface {
         }
 
 
-        if (playerValue <= 21 && playerValue > dealerValue){
+        if (playerValue <= 21 && playerValue > dealerValue) {
             playerWins();
-        } else if (playerValue > 21){
+        } else if (playerValue > 21) {
             dealerWins();
         }
 
@@ -86,59 +89,52 @@ public class BlackJackGame implements GameInterface {
 
 
 
-    private void welcomeStatement(){
-        System.out.println("Let's jack it up!\n");
-    }
-
-    public int showDealerDraw1(){
-        if (deck.get(0).getValue() < 9 || deck.get(0).getValue() > 10){
+    public int showDealerDraw1() {
+        if (deck.get(0).getValue() < 9 || deck.get(0).getValue() > 10) {
             deck.shuffle();
             showDealerDraw1();
-        }else {
+        } else {
             dealerValue += deck.get(0).getValue();
             dealHand.add((deck.get(0)));
             deck.draw();
-            System.out.println(dealHand);
+            System.out.println((dealHand) + "     " + (dealerValue) + "!" );
+
         }
         return dealerValue;
     }
 
 
-    public int showDealerDraw2(){
-        if (deck.get(0).getValue() < 6){
+    public int showDealerDraw2() {
+        if (deck.get(0).getValue() < 6) {
             deck.shuffle();
             showDealerDraw2();
-        }else {
+        } else {
             dealerValue += deck.get(0).getValue();
             dealHand.add((deck.get(0)));
             deck.draw();
-            System.out.println(dealHand);
+            System.out.println((dealHand) + "     " + (dealerValue) + "!" );
         }
         return dealerValue;
     }
 
-    public int showPlayerDraw(){
+    public int showPlayerDraw() {
         deck.shuffle();
-        if (deck.get(0).getValue() == 11){
-            playHand.add((deck.get(0)));
-            deck.draw();
-            System.out.println(playHand);
-            aces();
-        }else {
-            playerValue += deck.get(0).getValue();
-            playHand.add((deck.get(0)));
-            deck.draw();
-            System.out.println(playHand);
+        if (playHand.contains(deck.get(0).getFaceName())) {
+            showPlayerDraw();
+        } else if(deck.get(0).getValue() ==11) {
+        playHand.add((deck.get(0)));
+        deck.draw();
+        System.out.println(playHand);
+        aces();
+    }else{
+        playerValue += deck.get(0).getValue();
+        playHand.add((deck.get(0)));
+        deck.draw();
+        System.out.println(playHand);
         }
         return playerValue;
     }
 
-    public void dealerRecap1() {
-        System.out.println("It looks like the dealer has drawn a " + dealerValue + ".");
-    }
-    public void dealerRecap2() {
-        System.out.println("The dealer's gonna hold at " + dealerValue + ". See if you can beat that!\n");
-    }
 
     public void playerRecap(){
         System.out.println("Now you've got " + playerValue + ". Hit enter to draw.");
@@ -166,7 +162,7 @@ public class BlackJackGame implements GameInterface {
     private int aces() {
         int nextDraw = 0;
         Scanner scan = new Scanner(System.in);
-        System.out.println("Ooh, an Ace! Choose if you want this Ace to be a 1 or an 11.");
+        System.out.println("Do ya want this Ace to be a 1 or an 11?");
         try {nextDraw = scan.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("That ain't a number I ever heard of.");
@@ -174,10 +170,9 @@ public class BlackJackGame implements GameInterface {
         }
         if (nextDraw == 1 || nextDraw == 11) {
             playerValue += nextDraw;
-            System.out.println(playHand);
-            System.out.println("Ya drew a " + nextDraw + "!");
+            System.out.println("Ya got " + nextDraw + "!");
         }else{
-            System.out.println("Nice try.");
+            System.out.println("Nice try...");
             aces();
         }
         return playerValue;
@@ -186,7 +181,8 @@ public class BlackJackGame implements GameInterface {
     public void playerWins(){
         Scanner scan = new Scanner(System.in);
         playerChips += playerBet;
-        System.out.println("Woah! You got " + playerValue + " and won " + playerBet + " chips! You now have " + playerChips + " chips! Hit enter to play again or type 'exit' to get outta here.");
+        System.out.println("Woah! You got " + playerValue + " and won " + playerBet + " chips! You now have " + playerChips + " chips! \n"
+                +"Hit enter to play again or type 'Q' to get outta here.");
         playerValue = 0;
         dealerValue = 0;
         deck.addAllCard(playHand);
@@ -194,7 +190,7 @@ public class BlackJackGame implements GameInterface {
         playHand.clear();
         dealHand.clear();
         String respond = scan.nextLine();
-        if (respond.equals("exit")) {
+        if (respond.equalsIgnoreCase("Q")) {
             Casino c = new Casino();
             c.run();
         } else {
@@ -205,7 +201,8 @@ public class BlackJackGame implements GameInterface {
     public void dealerWins() {
         Scanner scan = new Scanner(System.in);
         playerChips -= playerBet;
-        System.out.println(playerValue + "! Welp, them's the breaks, kid. You lost " + playerBet + " chips and now have " + playerChips + " chips. Hit enter to play again or type 'exit' to get outta here.");
+        System.out.println(playerValue + "! Welp, them's the breaks, kid. You lost " + playerBet + " chips and now have " + playerChips + " chips.\n"
+                + "Hit enter to play again or type 'Q' to get outta here.");
         playerValue = 0;
         dealerValue = 0;
         deck.addAllCard(playHand);
@@ -213,7 +210,7 @@ public class BlackJackGame implements GameInterface {
         playHand.clear();
         dealHand.clear();
         String respond = scan.nextLine();
-        if (respond.equals("exit")) {
+        if (respond.equalsIgnoreCase("Q")) {
             Casino c = new Casino();
             c.run();
         } else {
@@ -224,7 +221,8 @@ public class BlackJackGame implements GameInterface {
     public void dealerWinsEarly(){
         Scanner scan = new Scanner(System.in);
         playerChips-=playerBet;
-        System.out.println("Welp, them's the breaks, kid. You lost " + playerBet + " chips and now have " + playerChips + " chips. Hit enter to play again or type 'exit' to get outta here.");
+        System.out.println("Welp, them's the breaks, kid. You lost " + playerBet + " chips and now have " + playerChips + " chips.\n"
+                + "Hit enter to play again or type 'Q' to get outta here.");
         playerValue = 0;
         dealerValue = 0;
         deck.addAllCard(playHand);
@@ -232,7 +230,7 @@ public class BlackJackGame implements GameInterface {
         playHand.clear();
         dealHand.clear();
         String respond = scan.nextLine();
-        if (respond.equals("exit")) {
+        if (respond.equalsIgnoreCase("Q")) {
             Casino c = new Casino();
             c.run();
         } else {
