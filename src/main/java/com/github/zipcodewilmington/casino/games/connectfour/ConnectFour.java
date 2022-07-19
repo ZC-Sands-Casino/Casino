@@ -70,10 +70,14 @@ public class ConnectFour implements GameInterface {
                 //TODO revisit if switch case statement possible
                 if (columnConsecutive4() == true) {
                     System.out.println("GAME OVER...");
+                    switchTurn();
+                    System.out.println("Player"+player+"\033[1;93m"+" wins!".toUpperCase());
                     System.exit(3);
                 }
                 else if (rowConsecutive4() == true) {
-                    System.out.println("GAME OVER..."); //TODO customize game over situation with ascii art
+                    System.out.println("GAME OVER...");
+                    switchTurn();
+                    System.out.println("Player"+player+"\033[1;93m"+"\033[1;93m wins!".toUpperCase());
                     System.exit(3);
                 }
                 //TODO needs diagonal win detection
@@ -102,9 +106,9 @@ public class ConnectFour implements GameInterface {
         if (isPositionValid(board) == true) {
             //check if position is empty aka contains 'O' character
             if (characterAtPosition.equals("O")) {
-                System.out.println("Index:\t" + r + ", " + columnChoice);
+//                System.out.println("Index:\t" + r + ", " + columnChoice);
                 //print out character at empty position...which would return 'O'
-                System.out.println("Character: " + getPlayerPosition(r, columnChoice * 2 - 1));
+//                System.out.println("Character: " + getPlayerPosition(r, columnChoice * 2 - 1));
                 gameBoard.setRow(r);
                 gameBoard.setCol(columnChoice *2 -1);
 
@@ -113,14 +117,14 @@ public class ConnectFour implements GameInterface {
                 board[r][columnChoice * 2 - 1] = player;
             } else {
                 //if position is not empty aka returns anything other than 'O'
-                System.out.println("Position not available...");
+//                System.out.println("Position not available...");
 
                 //decrement row by 1 aka move up 1 position in column
                 //until no longer able aka top row is reached
                 for (int newR = r - 1; newR >= 1; newR--) {
                     //check if new column position is empty
                     if (board[newR][columnChoice * 2 - 1].equals("O")) {
-                        System.out.println("Index:\t" + newR + ", " + columnChoice);
+//                        System.out.println("Index:\t" + newR + ", " + columnChoice);
                         gameBoard.setRow(newR);
                         gameBoard.setCol(columnChoice *2 -1);
 
