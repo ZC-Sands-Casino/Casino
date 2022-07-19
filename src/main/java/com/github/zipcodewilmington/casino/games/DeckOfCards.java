@@ -7,7 +7,7 @@ public class DeckOfCards  {
     public ArrayList<Card> deck;
     public static Card drawnCard;
 
-    private static boolean blackJackTrueWarFalse = true;
+    public static boolean blackJackTrueWarFalse = true;
 
     public DeckOfCards(ArrayList<Card> deck) {
         this.deck = deck;
