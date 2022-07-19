@@ -1,33 +1,33 @@
 package com.github.zipcodewilmington.casino.games.connectfour;
 
 public class Board {
-    public static final String ANSI_YELLOW = "\u001B[33m"; //replace with AnsiColor enums
+    public static final String ANSI_YELLOW = "\033[1;93m"; //replace with AnsiColor enums
     private static int rows = 8;
     private static int cols = 15;
 
 
     private int row;
     private int col;
-    public static final Character[][] board = new Character[rows][cols];
+    public static final String[][] board = new String[rows][cols];
 
 
-    public Board(Character[][] matrix) {
+    public Board(String[][] matrix) {
     }
 
     void createBoard() {
         for (int r=0; r<rows; r++) {
             for (int c=0; c<cols; c++) {
                 if (c %2 ==0) {
-                    board[r][c] = '|';
+                    board[r][c] = "|";
                 }
                 else {
-                    board[r][c] = 'O';
+                    board[r][c] = "O";
                 }
 
                 if (r==0) {
-                    board[r][c] = '_';
+                    board[r][c] = "_";
                 }
-                else if (r ==7) board[r][c] = '-';
+                else if (r ==7) board[r][c] = "-";
             }
         }
     }
@@ -58,8 +58,8 @@ public class Board {
 
 
     static void displayGameBoard() {
-        for (Character[] row : board) {
-            for (Character ch : row) {
+        for (String[] row : board) {
+            for (String ch : row) {
                 System.out.print(ANSI_YELLOW + ch);
                 System.out.print("\t");
             }
@@ -85,7 +85,7 @@ public class Board {
     }
 
 
-    public Character getPosition(int row, int col) {
+    public String getPosition(int row, int col) {
         return board[row][col];
     }
 

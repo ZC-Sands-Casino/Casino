@@ -2,6 +2,8 @@ package com.github.zipcodewilmington.casino.games.connectfour;
 
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.utils.AnsiColor;
+import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.*;
 
@@ -10,9 +12,18 @@ import static com.github.zipcodewilmington.casino.games.connectfour.Board.*;
 
 public class ConnectFour implements GameInterface {
     Board gameBoard;
-    Character playerR = 'R';
-    Character playerB = 'B';
-    Character player = playerR;
+    IOConsole con = new IOConsole(AnsiColor.RED);
+    Token rToken = new Token();
+    Token bToken = new Token();
+    String playerRTitle = "R";
+
+//    String playerR = rToken.getSymbol();
+//    String playerB = bToken.getSymbol();
+//    String player = rToken.getSymbol();
+    String playerR;
+    String playerB;
+    String player;
+
 
 
     public static void main(String[] args) {
@@ -30,12 +41,22 @@ public class ConnectFour implements GameInterface {
         int rounds = 1;
 //        Character playerR = 'R';
 //        Character playerB = 'B';
+        rToken.setSymbol("\033[1;31m"+"R");
+        playerR = rToken.getSymbol();
+        bToken.setSymbol("\033[1;30m"+"B");
+        playerB = bToken.getSymbol();
+        player = playerR;
 
 
         boolean allowedPlacement;
 
         gameBoard = new Board(board);
         gameBoard.createBoard();
+
+//        rToken.setSymbol("\033[1;31m"+"R");
+//        bToken.setSymbol("\033[1;30m"+"B");
+//        System.out.println(rToken.getSymbol());
+//        System.out.println(bToken.getSymbol());
 
         displayGameBoard();
         while (rounds <=21) {
@@ -64,8 +85,8 @@ public class ConnectFour implements GameInterface {
     int getUserInput() {
         int position;
         Scanner sc = new Scanner(System.in);
-        System.out.println("\nPlayer" + player + "'s Turn");
-        System.out.print("Enter a column number to place your token: ");
+        System.out.println("\033[0m\nPlayer" + player + "\033[0m's Turn");
+        System.out.print("\033[0mEnter a column number to place your token: ");
 
         position = sc.nextInt();
         return position;
@@ -74,13 +95,13 @@ public class ConnectFour implements GameInterface {
     void placeToken(int columnChoice) {
         //starting row at very bottom
         int r = 6;
-        Character characterAtPosition = getPlayerPosition(r, columnChoice * 2 - 1);
+        String characterAtPosition = getPlayerPosition(r, columnChoice * 2 - 1);
         ;
 
         // while board has no winner
         if (isPositionValid(board) == true) {
             //check if position is empty aka contains 'O' character
-            if (characterAtPosition.equals('O')) {
+            if (characterAtPosition.equals("O")) {
                 System.out.println("Index:\t" + r + ", " + columnChoice);
                 //print out character at empty position...which would return 'O'
                 System.out.println("Character: " + getPlayerPosition(r, columnChoice * 2 - 1));
@@ -98,7 +119,7 @@ public class ConnectFour implements GameInterface {
                 //until no longer able aka top row is reached
                 for (int newR = r - 1; newR >= 1; newR--) {
                     //check if new column position is empty
-                    if (board[newR][columnChoice * 2 - 1].equals('O')) {
+                    if (board[newR][columnChoice * 2 - 1].equals("O")) {
                         System.out.println("Index:\t" + newR + ", " + columnChoice);
                         gameBoard.setRow(newR);
                         gameBoard.setCol(columnChoice *2 -1);
@@ -120,19 +141,19 @@ public class ConnectFour implements GameInterface {
             player = playerR;
     }
 
-    Character getTurn() {
+    String getTurn() {
         if (player == playerR)
             return playerR;
         else
             return playerB;
     }
 
-    boolean isPositionValid(Character[][] board) {
+    boolean isPositionValid(String[][] board) {
         boolean isEmpty = true;
 
         for (int r = 6; r >= 1; r--) {
             for (int c = 1; c <= 13; c += 2) {
-                if (board[r][c].equals('O')) {
+                if (board[r][c].equals("O")) {
                     isEmpty = true;
                 }
 //                else if (board[r][c].equals('R') || board[r][c].equals('B')) {
@@ -145,7 +166,7 @@ public class ConnectFour implements GameInterface {
 
     }
 
-    Character getPlayerPosition(int row, int col) {
+    String getPlayerPosition(int row, int col) {
         return board[row][col];
     }
 
