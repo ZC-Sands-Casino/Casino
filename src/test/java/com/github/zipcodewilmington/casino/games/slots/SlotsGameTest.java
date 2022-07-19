@@ -33,4 +33,6 @@ public class SlotsGameTest {
         Assert.assertEquals(expected, actual);
     }
 
+    SlotsGame slotsGame = new SlotsGame();
+
 }
